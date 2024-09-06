@@ -1,23 +1,19 @@
 /* eslint-disable react/prop-types */
-import {
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  HStack,
-  FormErrorMessage,
-  Radio,
-} from "@chakra-ui/react";
+import { FormLabel, RadioGroup, HStack } from "@chakra-ui/react";
+import { FromControlWrapper } from "./FromControlWrapper.jsx";
+// import iconRadio from "../assets/icon-radio-selected.svg";
 
 export const FormRadioControl = ({
   formLabelText,
   formControlProps,
   children,
   nameValue,
-  handleChangeFunction,
   errorMessage,
+  formik,
+  type,
 }) => {
   return (
-    <FormControl {...formControlProps}>
+    <FromControlWrapper props={{ formControlProps, errorMessage, type }}>
       <FormLabel as="legend" color="brand.greyDark">
         {formLabelText} <span style={{ color: "brand.greenMedium" }}>*</span>
       </FormLabel>
@@ -30,41 +26,47 @@ export const FormRadioControl = ({
           const radioProps = {
             ...element,
             nameValue,
-            handleChangeFunction,
+            formik,
           };
           return <RadioComponent {...radioProps} key={element.value} />;
         })}
       </RadioGroup>
-      <FormErrorMessage>{errorMessage}</FormErrorMessage>
-    </FormControl>
+    </FromControlWrapper>
   );
 };
 
-const RadioComponent = ({
-  formRadioText,
-  nameValue,
-  value,
-  handleChangeFunction,
-}) => {
+const RadioComponent = ({ formRadioText, nameValue, value, formik }) => {
   return (
     <HStack
       spacing="24px"
       py="0.5rem"
       px="1rem"
-      border="1px solid brand.greyMedium"
+      borderColor="brand.greyMedium!important"
+      _hover={{
+        borderColor: "brand.greenMedium!important",
+        borderWidth: "2px",
+      }}
+      cursor="pointer"
+      border="1px solid"
       width={["100%", "49%"]}
       borderRadius="0.3125rem"
     >
-      <Radio
-        colorScheme="green"
-        size="lg"
+      <input
+        type="radio"
         value={value}
-        color="brand.greyDark"
+        id={value}
         name={nameValue}
-        onChange={handleChangeFunction}
-      >
-        {formRadioText}
-      </Radio>
+        onChange={formik.handleChange}
+        style={{
+          appearance: "none",
+          width: "1.5rem",
+          height: "1.5rem",
+          border: "1px solid",
+          borderColor: "hsl(186, 15%, 59%)",
+          borderRadius: "50%",
+        }}
+      />
+      <label htmlFor={value}>{formRadioText}</label>
     </HStack>
   );
 };

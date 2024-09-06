@@ -1,36 +1,47 @@
 /* eslint-disable react/prop-types */
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-} from "@chakra-ui/react";
+import { FormLabel, Input } from "@chakra-ui/react";
+import { FromControlWrapper } from "./FromControlWrapper";
+// import { withStyles } from "./withStyles.jsx";
 
 export const FormControlInputTextComponent = ({
   type,
   formControlProps,
   formLabelText,
-  handleChangeFunction,
-  getFieldProps,
   nameValue,
   errorMessage,
+  formik,
 }) => {
+  // const InputComponent = () => (
+  //   <Input
+  //     type={type}
+  //     name={nameValue}
+  //     id={nameValue}
+  //     onChange={formik.handleChange}
+  //     size="md"
+  //     {...formik.getFieldProps(nameValue)}
+  //   />
+  // );
+
+  // const StyledInput = withStyles(InputComponent);
+
   return (
-    <FormControl {...formControlProps}>
+    <FromControlWrapper props={{ formControlProps, errorMessage, type }}>
       <FormLabel htmlFor="firstName" color="brand.greyDark">
         {formLabelText} <span style={{ color: "brand.greenMedium" }}>*</span>
       </FormLabel>
+      {/* <StyledInput /> */}
       <Input
         type={type}
         name={nameValue}
         id={nameValue}
         borderColor="brand.greyMedium"
+        _hover={{ borderColor: "brand.greenMedium", borderWidth: "2px" }}
         focusBorderColor="brand.greenMedium"
-        onChange={handleChangeFunction}
+        onChange={formik.handleChange}
         size="md"
-        {...getFieldProps}
+        cursor="pointer"
+        {...formik.getFieldProps(nameValue)}
       />
-      <FormErrorMessage>{errorMessage}</FormErrorMessage>
-    </FormControl>
+    </FromControlWrapper>
   );
 };

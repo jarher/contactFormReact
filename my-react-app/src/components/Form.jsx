@@ -53,8 +53,6 @@ export const Form = ({ open }) => {
         isInvalid: formik.errors.firstName && formik.touched.firstName,
       },
       formLabelText: "First Name",
-      handleChangeFunction: formik.handleChange,
-      getFieldProps: formik.getFieldProps("firstName"),
       nameValue: "firstName",
       errorMessage: formik.errors.firstName,
     },
@@ -66,8 +64,6 @@ export const Form = ({ open }) => {
         isInvalid: formik.errors.lastName && formik.touched.lastName,
       },
       formLabelText: "Last Name",
-      handleChangeFunction: formik.handleChange,
-      getFieldProps: formik.getFieldProps("lastName"),
       nameValue: "lastName",
       errorMessage: formik.errors.lastName,
     },
@@ -78,8 +74,6 @@ export const Form = ({ open }) => {
         isInvalid: formik.errors.email && formik.touched.email,
       },
       formLabelText: "Email Address",
-      handleChangeFunction: formik.handleChange,
-      getFieldProps: formik.getFieldProps("email"),
       nameValue: "email",
       errorMessage: formik.errors.email,
     },
@@ -95,16 +89,13 @@ export const Form = ({ open }) => {
         {
           formRadioText: "General Enquity",
           value: "generalEnquity",
-          onChangeFunction: formik.handleChange,
         },
         {
           formRadioText: "Support Request",
           value: "supportRequest",
-          onChangeFunction: formik.handleChange,
         },
       ],
       nameValue: "queryType",
-      handleChangeFunction: formik.handleChange,
       errorMessage: formik.errors.queryType,
     },
     {
@@ -114,8 +105,6 @@ export const Form = ({ open }) => {
         isInvalid: formik.errors.message && formik.touched.message,
       },
       formLabelText: "Message",
-      handleChangeFunction: formik.handleChange,
-      getFieldProps: formik.getFieldProps("message"),
       nameValue: "message",
       errorMessage: formik.errors.message,
     },
@@ -126,7 +115,6 @@ export const Form = ({ open }) => {
       },
       formLabelText: " I consent to begin contacted by the team",
       nameValue: "consent",
-      getFieldProps: formik.getFieldProps("consent"),
       errorMessage: formik.errors.consent,
     },
   ];
@@ -152,17 +140,23 @@ export const Form = ({ open }) => {
           gap="0"
         >
           {formElements.map((element, i) => {
+            const elementProps = {
+              ...element,
+              formik,
+            };
             if (element.type === "text" || element.type === "email") {
-              return <FormControlInputTextComponent {...element} key={i} />;
+              return (
+                <FormControlInputTextComponent {...elementProps} key={i} />
+              );
             }
             if (element.type === "radioGroup") {
-              return <FormRadioControl {...element} key={i} />;
+              return <FormRadioControl {...elementProps} key={i} />;
             }
             if (element.type === "textArea") {
-              return <FormTextAreaComponent {...element} key={i} />;
+              return <FormTextAreaComponent {...elementProps} key={i} />;
             }
             if (element.type === "checkbox") {
-              return <FormCheckboxComponent {...element} key={i} />;
+              return <FormCheckboxComponent {...elementProps} key={i} />;
             }
           })}
 

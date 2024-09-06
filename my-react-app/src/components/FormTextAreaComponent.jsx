@@ -1,34 +1,32 @@
 /* eslint-disable react/prop-types */
-import {
-  FormControl,
-  Text,
-  Textarea,
-  FormErrorMessage,
-} from "@chakra-ui/react";
+import { Text, Textarea } from "@chakra-ui/react";
+import { FromControlWrapper } from "./FromControlWrapper";
 
 export const FormTextAreaComponent = ({
   formControlProps,
   formLabelText,
-  handleChangeFunction,
-  getFieldProps,
   nameValue,
   errorMessage,
+  formik,
+  type,
 }) => {
   return (
-    <FormControl {...formControlProps}>
+    <FromControlWrapper props={{ formControlProps, errorMessage, type }}>
       <Text mb="8px">
         {formLabelText} <span style={{ color: "brand.greenMedium" }}>*</span>
       </Text>
       <Textarea
-        onChange={handleChangeFunction}
+        onChange={formik.handleChange}
         size="sm"
         id={nameValue}
         name={nameValue}
         borderColor="brand.greyMedium"
         focusBorderColor="brand.greenMedium"
-        {...getFieldProps}
+        _hover={{ borderColor: "brand.greenMedium", borderWidth: "2px" }}
+        cursor="pointer"
+        borderRadius="0.3125rem"
+        {...formik.getFieldProps(nameValue)}
       />
-      <FormErrorMessage>{errorMessage}</FormErrorMessage>
-    </FormControl>
+    </FromControlWrapper>
   );
 };
