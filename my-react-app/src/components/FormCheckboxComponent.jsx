@@ -14,18 +14,18 @@ export const FormCheckboxComponent = ({
   const checkboxStyles = {
     cursor: "pointer",
     backgroundColor: "transparent",
-    width: "1.3rem",
-    height: "1.3rem",
+    width: "1rem",
+    height: "1rem",
     appearance: "none",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: "brand.greyMedium",
+    borderColor: "hsl(186, 15%, 59%)",
     borderRadius: "3px",
   };
 
   return (
-    <FromControlWrapper props={{ formControlProps, errorMessage, type }}>
-      <HStack alignItems="center" gap="0">
+    <FromControlWrapper props={{ errorMessage, type }}>
+      <HStack alignItems="center" gap="0" {...formControlProps}>
         <input
           id={nameValue}
           name={nameValue}
@@ -33,12 +33,23 @@ export const FormCheckboxComponent = ({
           style={checkboxStyles}
           {...formik.getFieldProps(nameValue)}
         />
-        <label htmlFor="consent" style={{ marginLeft: "1rem" }}>
-          {formLabelText} <span style={{ color: "brand.greenMedium" }}>*</span>
+        <label
+          htmlFor="consent"
+          style={{
+            marginLeft: "1rem",
+            cursor: "Pointer",
+            fontWeight: "400",
+            fontSize: "0.725rem",
+          }}
+        >
+          {formLabelText}{" "}
+          <span style={{ color: "brand.greenMedium", paddingLeft: "0.3rem" }}>
+            *
+          </span>
         </label>
       </HStack>
 
-      <Text color="brand.red" mt="0.325rem">
+      <Text color="brand.red" mt="0.325rem" fontSize="0.7rem">
         {errorMessage}
       </Text>
     </FromControlWrapper>

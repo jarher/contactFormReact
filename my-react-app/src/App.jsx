@@ -8,6 +8,7 @@ import {
   AlertDescription,
   VStack,
 } from "@chakra-ui/react";
+import "@fontsource/karla";
 import { Form } from "./components/Form.jsx";
 import IconSuccess from "./assets/icon-success-check.svg";
 import { useState } from "react";
@@ -25,6 +26,9 @@ const colors = {
 
 const theme = extendTheme({
   colors,
+  fonts: {
+    body: `'Karla', sans-serif`,
+  },
   styles: {
     global: {
       body: {
@@ -38,15 +42,19 @@ const theme = extendTheme({
       },
       h1: {
         color: colors.brand.greyDark,
-        fontSize: "1.25rem",
+        fontSize: ["2rem", "auto", "1.45rem"],
+        fontWeight: "bold",
       },
       form: {
         bg: "white",
         padding: "1.5625rem",
         mx: "1rem",
         my: "2rem",
-        borderRadius: "1rem",
-        maxWidth: ["auto", "auto", "740px"],
+        borderRadius: "0.5rem",
+        maxWidth: ["auto", "auto", "520px"],
+      },
+      label: {
+        fontSize: ["auto", "0.825rem"],
       },
     },
   },
@@ -55,20 +63,14 @@ const theme = extendTheme({
 function App() {
   const [isVisible, setIsVisible] = useState(false);
 
-  // useEffect(() => {
-  //   let temp;
-  //   if (isVisible) {
-  //     temp = () =>
-  //       setTimeout(() => {
-  //         setIsVisible(false);
-  //       }, 1000);
-  //     return clearTimeout(temp);
-  //   }
-  // }, []);
-
   return (
     <ChakraProvider theme={theme}>
-      <VStack position="relative" gap="0rem">
+      <VStack
+        position="relative"
+        justifyContent="center"
+        height={["auto", "auto", "100vh"]}
+        gap="0"
+      >
         {isVisible && <AlertComponent />}
         <Form open={setIsVisible} />
       </VStack>
@@ -80,11 +82,11 @@ const AlertComponent = () => {
   return (
     <Alert
       status="success"
-      width={["90%", "auto", "50%"]}
+      width={["90%", "auto", "57%"]}
       flexFlow="row wrap"
       bg="brand.greyDark"
       borderRadius="0.625rem"
-      padding="1.5rem"
+      padding="1.5rem 1.2rem"
       mt="1.5rem"
       mb="-2rem"
     >
@@ -95,7 +97,7 @@ const AlertComponent = () => {
       <AlertDescription
         width="100%"
         color="brand.greenLighter"
-        fontSize="0.85rem"
+        fontSize="0.68rem"
         mt="0.625rem"
       >
         Thanks for completing the form. We'll be in touch soon!

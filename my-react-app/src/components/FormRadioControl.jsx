@@ -14,8 +14,16 @@ export const FormRadioControl = ({
 }) => {
   return (
     <FromControlWrapper props={{ formControlProps, errorMessage, type }}>
-      <FormLabel as="legend" color="brand.greyDark">
-        {formLabelText} <span style={{ color: "brand.greenMedium" }}>*</span>
+      <FormLabel
+        as="legend"
+        color="brand.greyDark"
+        fontSize={["auto", "0.725rem"]}
+        fontWeight="400"
+      >
+        {formLabelText}{" "}
+        <span style={{ color: "brand.greenMedium", paddingLeft: "0.3rem" }}>
+          *
+        </span>
       </FormLabel>
       <RadioGroup
         display="flex"
@@ -35,7 +43,23 @@ export const FormRadioControl = ({
   );
 };
 
-const RadioComponent = ({ formRadioText, nameValue, value, formik }) => {
+const RadioComponent = ({
+  formRadioText,
+  nameValue,
+  value,
+  formik,
+  radioState,
+  mt,
+}) => {
+  const { state, radioHandler } = radioState;
+  const clickStyles = state
+    ? {
+        bg: "brand.greenLighter",
+        borderColor: "brand.greenMedium!important",
+        borderWidth: "2px",
+      }
+    : "";
+
   return (
     <HStack
       spacing="24px"
@@ -50,6 +74,8 @@ const RadioComponent = ({ formRadioText, nameValue, value, formik }) => {
       border="1px solid"
       width={["100%", "49%"]}
       borderRadius="0.3125rem"
+      {...clickStyles}
+      mt={mt}
     >
       <input
         type="radio"
@@ -57,16 +83,20 @@ const RadioComponent = ({ formRadioText, nameValue, value, formik }) => {
         id={value}
         name={nameValue}
         onChange={formik.handleChange}
+        onClick={radioHandler}
         style={{
           appearance: "none",
-          width: "1.5rem",
-          height: "1.5rem",
+          width: "1.1rem",
+          height: "1.1rem",
           border: "1px solid",
-          borderColor: "hsl(186, 15%, 59%)",
+          borderColor: state ? "" : "hsl(186, 15%, 59%)",
           borderRadius: "50%",
+          cursor: "pointer",
         }}
       />
-      <label htmlFor={value}>{formRadioText}</label>
+      <label htmlFor={value} style={{ width: "80%" }}>
+        {formRadioText}
+      </label>
     </HStack>
   );
 };
