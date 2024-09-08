@@ -1,16 +1,7 @@
 /* eslint-disable react/prop-types */
-import { HStack, Text } from "@chakra-ui/react";
-import { FromControlWrapper } from "./FromControlWrapper";
+import { FormControl, HStack, Text } from "@chakra-ui/react";
 
-FromControlWrapper;
-export const FormCheckboxComponent = ({
-  type,
-  formControlProps,
-  formLabelText,
-  nameValue,
-  errorMessage,
-  formik,
-}) => {
+export const FormCheckboxComponent = ({ formik }) => {
   const checkboxStyles = {
     cursor: "pointer",
     backgroundColor: "transparent",
@@ -24,14 +15,17 @@ export const FormCheckboxComponent = ({
   };
 
   return (
-    <FromControlWrapper props={{ errorMessage, type }}>
-      <HStack alignItems="center" gap="0" {...formControlProps}>
+    <FormControl
+      mt="1.575rem"
+      isInvalid={formik.errors.consent && formik.touched.consent}
+    >
+      <HStack alignItems="center" gap="0" mt="1.575rem">
         <input
-          id={nameValue}
-          name={nameValue}
-          type={type}
+          id="consent"
+          name="consent"
+          type="checkbox"
           style={checkboxStyles}
-          {...formik.getFieldProps(nameValue)}
+          {...formik.getFieldProps("consent")}
         />
         <label
           htmlFor="consent"
@@ -42,7 +36,7 @@ export const FormCheckboxComponent = ({
             fontSize: "0.725rem",
           }}
         >
-          {formLabelText}{" "}
+          I consent to begin contacted by the team{" "}
           <span style={{ color: "brand.greenMedium", paddingLeft: "0.3rem" }}>
             *
           </span>
@@ -50,8 +44,8 @@ export const FormCheckboxComponent = ({
       </HStack>
 
       <Text color="brand.red" mt="0.325rem" fontSize="0.7rem">
-        {errorMessage}
+        {formik.errors.consent}
       </Text>
-    </FromControlWrapper>
+    </FormControl>
   );
 };
