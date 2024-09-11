@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import { HStack } from "@chakra-ui/react";
 import { FormWrapper } from "./FormWrapper";
+import { FormContext } from "./Form";
+import { useContext } from "react";
 
-export const FormInputTextComponent = (props) => {
-  const { inputStyles, formik } = props;
+export const FormInputTextComponent = () => {
+  const { formik, inputStyles } = useContext(FormContext);
   const inputTextElements = [
     {
       id: "i1",
@@ -65,21 +67,27 @@ export const FormInputTextComponent = (props) => {
       gap="0"
     >
       {inputTextElements.map((element) => (
-        <FormWrapper formik={formik} {...element} key={element.id} />
+        <FormWrapper {...element} key={element.id} />
       ))}
+      {/* show first and last name error message for medium size */}
       <HStack
         display={["none", "none", "flex"]}
         justifyContent="space-between"
         width="100%"
       >
-        <div style={{ width: "48.5%", color: "hsl(0, 66%, 54%)" }}>
-          {formik.errors.firstName && formik.errors.firstName}
-        </div>
-
-        <div style={{ width: "48.5%", color: "hsl(0, 66%, 54%)" }}>
-          {formik.errors.lastName && formik.errors.lastName}
-        </div>
+        <DisplayErrorMediumBreakpoint errorMessage={formik.errors.firstName} />
+        <DisplayErrorMediumBreakpoint errorMessage={formik.errors.lastName} />
       </HStack>
     </HStack>
+  );
+};
+
+const DisplayErrorMediumBreakpoint = ({ errorMessage }) => {
+  return (
+    <div
+      style={{ width: "48.5%", color: "hsl(0, 66%, 54%)", fontSize: "0.8rem" }}
+    >
+      {errorMessage}
+    </div>
   );
 };

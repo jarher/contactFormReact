@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 
+import { useContext } from "react";
 import { FormWrapper } from "./FormWrapper";
+import { FormContext } from "./Form";
 
-export const FormEmailComponent = (props) => {
-  const { inputStyles, formik } = props;
+export const FormEmailComponent = () => {
+  const { inputStyles, formik } = useContext(FormContext);
   const emailProps = {
     formControlProps: {
-      mt: ["1.7rem", "0"],
       isInvalid: formik.errors.email && formik.touched.email,
     },
     formLabelProps: {
@@ -27,5 +28,5 @@ export const FormEmailComponent = (props) => {
       errorMessage: formik.errors.email,
     },
   };
-  return <FormWrapper formik={formik} {...emailProps} />;
+  return <FormWrapper {...emailProps} />;
 };

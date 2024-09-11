@@ -4,9 +4,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormInputTextComponent } from "./FormInputTextComponent";
 import { FormEmailComponent } from "./FormEmailComponent";
-import { FormRadioComponent } from "./FormRadioComponent";
 import { FormTextAreaComponent } from "./FormTextAreaComponent";
 import { FormCheckboxComponent } from "./FormCheckboxComponent";
+import { FormRadioComponent } from "./FormRadioComponent";
+import { createContext } from "react";
+
+export const FormContext = createContext(null);
 
 const formSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -29,7 +32,7 @@ const formSchema = Yup.object().shape({
     .oneOf([true], "To submit this form, please consent to begin contacted"),
 });
 
-export const Form = ({ open }) => {
+export const Form = ({ notification }) => {
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -41,7 +44,7 @@ export const Form = ({ open }) => {
     },
     validationSchema: formSchema,
     onSubmit: () => {
-      open(true);
+      formik.resetForm();
     },
   });
 
@@ -65,19 +68,33 @@ export const Form = ({ open }) => {
   };
 
   return (
-    <>
+    <FormContext.Provider value={{ formik, inputStyles }}>
       <form onSubmit={formik.handleSubmit} noValidate>
         <h1>Contact Us</h1>
         <HStack mt={["1.5rem", "auto", "1rem"]} flexFlow="row wrap">
-          <FormInputTextComponent inputStyles={inputStyles} formik={formik} />
-          <FormEmailComponent inputStyles={inputStyles} formik={formik} />
-          <FormRadioComponent formik={formik} />
-          <FormTextAreaComponent inputStyles={inputStyles} formik={formik} />
+          <FormInputTextComponent />
+          <FormEmailComponent />
+          <FormRadioComponent />
+          <FormTextAreaComponent />
           <FormCheckboxComponent formik={formik} />
 
-          <Button {...buttonProps}>Submit</Button>
+          <Button {...buttonProps} onClick={notification}>
+            Submit
+          </Button>
         </HStack>
       </form>
-    </>
+    </FormContext.Provider>
   );
 };
+
+export const AsteriskComponent = () => (
+  <span
+    style={{
+      color: "hsl(169, 82%, 27%)",
+      paddingLeft: "0.3rem",
+      fontSize: "1rem",
+    }}
+  >
+    *
+  </span>
+);

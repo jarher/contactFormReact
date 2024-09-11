@@ -5,14 +5,16 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
+import { AsteriskComponent, FormContext } from "./Form";
+import { useContext } from "react";
 
 export const FormWrapper = ({
   formControlProps,
   formLabelProps,
   formInputProps,
   formErrorProps,
-  formik,
 }) => {
+  const { formik } = useContext(FormContext);
   const { formLabelText, ...labelRest } = formLabelProps;
   const { errorMessage, ...errorRest } = formErrorProps;
   const { name } = formInputProps;
@@ -20,20 +22,19 @@ export const FormWrapper = ({
     <FormControl {...formControlProps}>
       <FormLabel {...labelRest}>
         {formLabelText}
-        <span style={{ color: "brand.greenMedium", paddingLeft: "0.3rem" }}>
-          *
-        </span>
+        <AsteriskComponent />
       </FormLabel>
-      {
-        <Input
-          size="sm"
-          {...formInputProps}
-          {...formik.getFieldProps({ name })}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-      }
-      <FormErrorMessage {...errorRest}>{errorMessage}</FormErrorMessage>
+      <Input
+        size="md"
+        {...formInputProps}
+        {...formik.getFieldProps({ name })}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+
+      <FormErrorMessage {...errorRest} size="0.8rem">
+        {errorMessage}
+      </FormErrorMessage>
     </FormControl>
   );
 };

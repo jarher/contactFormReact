@@ -12,7 +12,7 @@ import "@fontsource/karla";
 import { Form } from "./components/Form.jsx";
 import IconSuccess from "./assets/icon-success-check.svg";
 import { useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
 const colors = {
   brand: {
     greenLighter: "hsl(148, 38%, 91%)",
@@ -61,7 +61,9 @@ const theme = extendTheme({
 });
 
 function App() {
-  const [isVisible, setIsVisible] = useState(false);
+  const displayMsg = () => {
+    toast(<AlertComponent />);
+  };
 
   return (
     <ChakraProvider theme={theme}>
@@ -71,8 +73,20 @@ function App() {
         height={["auto", "auto", "100vh"]}
         gap="0"
       >
-        {isVisible && <AlertComponent />}
-        <Form open={setIsVisible} />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          theme="light"
+          transition="Bounce"
+        />
+        <Form notification={displayMsg} />
       </VStack>
     </ChakraProvider>
   );
@@ -84,21 +98,25 @@ const AlertComponent = () => {
       status="success"
       width={["90%", "auto", "57%"]}
       flexFlow="row wrap"
+      alignItems="center"
       bg="brand.greyDark"
       borderRadius="0.625rem"
-      padding="1.5rem 1.2rem"
+      // padding="1rem 1.2rem"
       mt="1.5rem"
       mb="-2rem"
     >
-      <img src={IconSuccess} alt="icon success" />
-      <AlertTitle color="brand.white" marginLeft="0.625rem">
+      <img
+        src={IconSuccess}
+        alt="icon success"
+        style={{ width: "1.1rem", height: "1.1rem" }}
+      />
+      <AlertTitle color="brand.white" marginLeft="0.625rem" fontSize="0.8rem">
         Message Sent!
       </AlertTitle>
       <AlertDescription
         width="100%"
         color="brand.greenLighter"
-        fontSize="0.68rem"
-        mt="0.625rem"
+        fontSize="0.7rem"
       >
         Thanks for completing the form. We'll be in touch soon!
       </AlertDescription>
