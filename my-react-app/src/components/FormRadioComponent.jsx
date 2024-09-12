@@ -9,8 +9,9 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import radioSelectedIcon from "../assets/icon-radio-selected.svg";
-import { useContext, useReducer } from "react";
-import { AsteriskComponent, FormContext } from "./Form";
+import { useContext } from "react";
+import { FormContext } from "./Form";
+import { AsteriskComponent } from "./AsteriskComponent";
 
 export const FormRadioComponent = () => {
   const { formik } = useContext(FormContext);
@@ -18,6 +19,7 @@ export const FormRadioComponent = () => {
     <FormControl
       as="fieldset"
       isInvalid={formik.errors.queryType && formik.touched.queryType}
+      mt={["1rem", "1rem", "0"]}
     >
       <FormLabel
         as="legend"
@@ -34,24 +36,9 @@ export const FormRadioComponent = () => {
   );
 };
 
-function reducer(_, action) {
-  if (action.type === "generalEnquity") {
-    return {
-      generalEnquityState: true,
-      supportRequest: false,
-    };
-  }
-  return {
-    generalEnquityState: false,
-    supportRequest: true,
-  };
-}
-
 const RadioGroupWrapper = ({ formik }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    generalEnquityState: false,
-    supportRequest: false,
-  });
+  const { radioValue, state, radioGeneralEnquityRef, radioSupportRequestRef } =
+    useContext(FormContext);
 
   const changeStyles = (state) => {
     let background = state ? "hsl(148, 38%, 91%)" : "transparent";
@@ -69,23 +56,27 @@ const RadioGroupWrapper = ({ formik }) => {
       value: "generalEnquity",
       labelText: "General Enquity",
       radioHandler: () => {
-        dispatch({ type: "generalEnquity" });
+        radioValue({ type: "generalEnquity" });
       },
       newStyles: changeStyles(state.generalEnquityState),
+      state: state.generalEnquityState,
+      elementRef: radioGeneralEnquityRef,
     },
     {
       value: "supportRequest",
       labelText: "Support Request",
       radioHandler: () => {
-        dispatch({ type: "supportRequest" });
+        radioValue({ type: "supportRequest" });
       },
       newStyles: changeStyles(state.supportRequest),
+      state: state.supportRequest,
+      elementRef: radioSupportRequestRef,
     },
   ];
 
   return (
     <RadioGroup name="queryType">
-      <Stack direction="row" justifyContent="space-between">
+      <Stack direction="row" justifyContent="space-between" flex-wrap="wrap">
         {radioOptions.map((element) => {
           const props = {
             ...element,
@@ -98,7 +89,15 @@ const RadioGroupWrapper = ({ formik }) => {
   );
 };
 
-const RadioBox = ({ formik, value, labelText, radioHandler, newStyles }) => {
+const RadioBox = ({
+  formik,
+  value,
+  labelText,
+  radioHandler,
+  newStyles,
+  state,
+  elementRef,
+}) => {
   return (
     <>
       <Box
@@ -115,6 +114,7 @@ const RadioBox = ({ formik, value, labelText, radioHandler, newStyles }) => {
           borderWidth: "2px!important",
           cursor: "pointer",
         }}
+        ref={elementRef}
       >
         <Radio
           value={value}
@@ -125,9 +125,9 @@ const RadioBox = ({ formik, value, labelText, radioHandler, newStyles }) => {
             backgroundPosition: "center",
             backgroundSize: "cover",
             border: "none",
-            outline: "1px solid red",
           }}
           onChange={formik.handleChange}
+          isChecked={state}
         >
           {labelText}
         </Radio>

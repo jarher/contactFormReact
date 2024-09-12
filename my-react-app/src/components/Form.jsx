@@ -1,13 +1,17 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { Button, HStack } from "@chakra-ui/react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { FormInputTextComponent } from "./FormInputTextComponent";
 import { FormEmailComponent } from "./FormEmailComponent";
 import { FormTextAreaComponent } from "./FormTextAreaComponent";
 import { FormCheckboxComponent } from "./FormCheckboxComponent";
 import { FormRadioComponent } from "./FormRadioComponent";
-import { createContext } from "react";
+import { createContext, useRef, useReducer, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { AlertComponent } from "./AlertComponent";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "react-toastify/dist/ReactToastify.css";
 
 export const FormContext = createContext(null);
 
@@ -32,7 +36,35 @@ const formSchema = Yup.object().shape({
     .oneOf([true], "To submit this form, please consent to begin contacted"),
 });
 
-export const Form = ({ notification }) => {
+function reducer(_, action) {
+  if (action.type === "generalEnquity") {
+    return {
+      generalEnquityState: true,
+      supportRequest: false,
+    };
+  }
+  if (action.type === "supportRequest") {
+    return {
+      generalEnquityState: false,
+      supportRequest: true,
+    };
+  }
+  return {
+    generalEnquityState: false,
+    supportRequest: false,
+  };
+}
+
+export const Form = () => {
+  const radioGeneralEnquityRef = useRef(null);
+  const radioSupportRequestRef = useRef(null);
+  const [loadingState, setLoadingState] = useState(false);
+  const consentCheckboxRef = useRef(null);
+  const [state, dispatch] = useReducer(reducer, {
+    generalEnquityState: false,
+    supportRequest: false,
+  });
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -44,7 +76,28 @@ export const Form = ({ notification }) => {
     },
     validationSchema: formSchema,
     onSubmit: () => {
-      formik.resetForm();
+      setLoadingState(true);
+      setTimeout(() => {
+        setLoadingState(false);
+        toast(<AlertComponent />, {
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+        dispatch({ type: null });
+        [radioGeneralEnquityRef, radioSupportRequestRef].forEach((element) =>
+          element.current
+            .querySelector(".chakra-radio__control")
+            .removeAttribute("data-checked")
+        );
+        consentCheckboxRef.current.checked = false;
+        formik.resetForm();
+      }, 2000);
     },
   });
 
@@ -68,33 +121,34 @@ export const Form = ({ notification }) => {
   };
 
   return (
-    <FormContext.Provider value={{ formik, inputStyles }}>
-      <form onSubmit={formik.handleSubmit} noValidate>
-        <h1>Contact Us</h1>
-        <HStack mt={["1.5rem", "auto", "1rem"]} flexFlow="row wrap">
-          <FormInputTextComponent />
-          <FormEmailComponent />
-          <FormRadioComponent />
-          <FormTextAreaComponent />
-          <FormCheckboxComponent formik={formik} />
+    <>
+      <ToastContainer />
+      <FormContext.Provider
+        value={{
+          radioValue: (value) => dispatch(value),
+          consentCheckboxRef,
+          radioGeneralEnquityRef,
+          radioSupportRequestRef,
+          formik,
+          inputStyles,
+          state,
+        }}
+      >
+        <form onSubmit={formik.handleSubmit} noValidate>
+          <h1>Contact Us</h1>
+          <HStack mt={["1.5rem", "auto", "1rem"]} flexFlow="row wrap">
+            <FormInputTextComponent />
+            <FormEmailComponent />
+            <FormRadioComponent />
+            <FormTextAreaComponent />
+            <FormCheckboxComponent />
 
-          <Button {...buttonProps} onClick={notification}>
-            Submit
-          </Button>
-        </HStack>
-      </form>
-    </FormContext.Provider>
+            <Button {...buttonProps} isLoading={loadingState}>
+              Submit
+            </Button>
+          </HStack>
+        </form>
+      </FormContext.Provider>
+    </>
   );
 };
-
-export const AsteriskComponent = () => (
-  <span
-    style={{
-      color: "hsl(169, 82%, 27%)",
-      paddingLeft: "0.3rem",
-      fontSize: "1rem",
-    }}
-  >
-    *
-  </span>
-);

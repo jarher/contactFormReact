@@ -5,8 +5,9 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { AsteriskComponent, FormContext } from "./Form";
+import { FormContext } from "./Form";
 import { useContext } from "react";
+import { AsteriskComponent } from "./AsteriskComponent";
 
 export const FormWrapper = ({
   formControlProps,
@@ -19,7 +20,7 @@ export const FormWrapper = ({
   const { errorMessage, ...errorRest } = formErrorProps;
   const { name } = formInputProps;
   return (
-    <FormControl {...formControlProps}>
+    <FormControl {...formControlProps} mt={["1rem", "1rem", "0"]}>
       <FormLabel {...labelRest}>
         {formLabelText}
         <AsteriskComponent />

@@ -6,12 +6,17 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AsteriskComponent, FormContext } from "./Form";
+import { FormContext } from "./Form";
+import { AsteriskComponent } from "./AsteriskComponent";
 
 export const FormTextAreaComponent = () => {
   const { formik, inputStyles } = useContext(FormContext);
+
   return (
-    <FormControl isInvalid={formik.errors.message && formik.touched.message}>
+    <FormControl
+      isInvalid={formik.errors.message && formik.touched.message}
+      mt={["1rem", "1rem", "0"]}
+    >
       <Text mb="8px" fontSize={["auto", "0.725rem"]} fontWeight="400">
         Message
         <AsteriskComponent />

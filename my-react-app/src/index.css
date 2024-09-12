@@ -1,3 +1,17 @@
 input[type="checkbox"]:checked {
   background: url("./assets/icon-checkbox-check.svg") no-repeat center/cover;
 }
+.Toastify__toast-container {
+  padding: 0;
+  position: relative;
+}
+.Toastify__toast-body {
+  padding: 0;
+}
+.Toastify__toast--default {
+  padding: 0;
+  background: "transparent" !important;
+}
+.Toastify__close-button {
+  display: none;
+}

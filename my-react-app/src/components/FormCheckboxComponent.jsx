@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { FormControl, HStack, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AsteriskComponent, FormContext } from "./Form";
+import { FormContext } from "./Form";
+import { AsteriskComponent } from "./AsteriskComponent";
 
 export const FormCheckboxComponent = () => {
-  const { formik } = useContext(FormContext);
+  const { formik, consentCheckboxRef } = useContext(FormContext);
   return (
     <FormControl isInvalid={formik.errors.consent && formik.touched.consent}>
       <HStack alignItems="center" gap="0" mt="1rem">
@@ -24,6 +25,7 @@ export const FormCheckboxComponent = () => {
             borderRadius: "3px",
           }}
           {...formik.getFieldProps("consent")}
+          ref={consentCheckboxRef}
         />
         <label
           htmlFor="consent"
