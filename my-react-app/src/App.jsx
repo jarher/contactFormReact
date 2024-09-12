@@ -42,7 +42,7 @@ const theme = extendTheme({
         mx: ["1rem", "0"],
         my: ["2rem", "0"],
         borderRadius: "0.5rem",
-        maxWidth: ["auto", "auto", "520px"],
+        maxWidth: ["auto", "auto", "550px"],
       },
       label: {
         fontSize: ["auto", "0.825rem"],

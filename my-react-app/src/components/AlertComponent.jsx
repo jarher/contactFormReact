@@ -6,7 +6,6 @@ export const AlertComponent = () => {
   return (
     <Alert
       status="success"
-      width={["70%", "100%"]}
       flexFlow="row wrap"
       alignItems="center"
       bg="brand.greyDark"

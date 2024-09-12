@@ -65,47 +65,22 @@ export const Form = () => {
     supportRequest: false,
   });
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      queryType: "",
-      message: "",
-      consent: false,
-    },
-    validationSchema: formSchema,
-    onSubmit: () => {
-      setLoadingState(true);
-      setTimeout(() => {
-        setLoadingState(false);
-        toast(<AlertComponent />, {
-          position: "top-center",
-          autoClose: false,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "colored",
-        });
-        dispatch({ type: null });
-        [radioGeneralEnquityRef, radioSupportRequestRef].forEach((element) =>
-          element.current
-            .querySelector(".chakra-radio__control")
-            .removeAttribute("data-checked")
-        );
-        consentCheckboxRef.current.checked = false;
-        formik.resetForm();
-      }, 2000);
-    },
-  });
-
   const inputStyles = {
     borderColor: "brand.greyMedium",
     _hover: { borderColor: "brand.greenMedium", borderWidth: "2px" },
     focusBorderColor: "brand.greenMedium",
     cursor: "pointer",
+  };
+
+  const toastProps = {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
   };
 
   const buttonProps = {
@@ -120,9 +95,37 @@ export const Form = () => {
     fontWeight: "400",
   };
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      queryType: "",
+      message: "",
+      consent: false,
+    },
+    validationSchema: formSchema,
+    onSubmit: () => {
+      setLoadingState(true);
+      setTimeout(() => {
+        setLoadingState(false);
+        toast(<AlertComponent />, toastProps);
+        dispatch({ type: null });
+        [radioGeneralEnquityRef, radioSupportRequestRef].forEach((element) =>
+          element.current
+            .querySelector(".chakra-radio__control")
+            .removeAttribute("data-checked")
+        );
+        consentCheckboxRef.current.checked = false;
+        formik.resetForm();
+        window.scroll(0, 0);
+      }, 2000);
+    },
+  });
+
   return (
     <>
-      <ToastContainer />
+      <ToastContainer className="notification" />
       <FormContext.Provider
         value={{
           radioValue: (value) => dispatch(value),
@@ -136,7 +139,11 @@ export const Form = () => {
       >
         <form onSubmit={formik.handleSubmit} noValidate>
           <h1>Contact Us</h1>
-          <HStack mt={["1.5rem", "auto", "1rem"]} flexFlow="row wrap">
+          <HStack
+            mt={["1.5rem", "auto", "1rem"]}
+            flexFlow="row wrap"
+            min-height="75vh"
+          >
             <FormInputTextComponent />
             <FormEmailComponent />
             <FormRadioComponent />

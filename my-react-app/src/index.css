@@ -1,17 +1,24 @@
 input[type="checkbox"]:checked {
   background: url("./assets/icon-checkbox-check.svg") no-repeat center/cover;
 }
-.Toastify__toast-container {
-  padding: 0;
+.notification {
   position: relative;
+  padding: 0;
+  margin: 1rem auto 0 auto;
+  width: 72%;
 }
-.Toastify__toast-body {
+.notification .Toastify__toast,
+.notification .Toastify__toast-body {
   padding: 0;
 }
-.Toastify__toast--default {
-  padding: 0;
-  background: "transparent" !important;
+.notification .Toastify__toast-theme--colored {
+  background: transparent;
 }
 .Toastify__close-button {
   display: none;
+}
+@media screen and (min-width: 1024px) {
+  .notification {
+    margin: 0;
+  }
 }

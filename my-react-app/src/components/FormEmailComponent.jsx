@@ -13,8 +13,6 @@ export const FormEmailComponent = () => {
     formLabelProps: {
       htmlFor: "email",
       color: "brand.greyDark",
-      fontSize: ["auto", "0.7rem"],
-      fontWeight: "400",
       mb: "0.2rem",
       formLabelText: "Email Address",
     },

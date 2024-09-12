@@ -17,8 +17,6 @@ export const FormInputTextComponent = () => {
       formLabelProps: {
         htmlFor: "firstName",
         color: "brand.greyDark",
-        fontSize: ["auto", "0.7rem"],
-        fontWeight: "400",
         mb: "0.2rem",
         formLabelText: "First Name",
       },
@@ -42,8 +40,6 @@ export const FormInputTextComponent = () => {
       formLabelProps: {
         htmlFor: "lastName",
         color: "brand.greyDark",
-        fontSize: ["auto", "0.7rem"],
-        fontWeight: "400",
         mb: "0.2rem",
         formLabelText: "Last Name",
       },

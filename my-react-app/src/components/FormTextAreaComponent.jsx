@@ -17,7 +17,7 @@ export const FormTextAreaComponent = () => {
       isInvalid={formik.errors.message && formik.touched.message}
       mt={["1rem", "1rem", "0"]}
     >
-      <Text mb="8px" fontSize={["auto", "0.725rem"]} fontWeight="400">
+      <Text mb="8px" fontSize={["auto", "0.8rem"]} fontWeight="700">
         Message
         <AsteriskComponent />
       </Text>

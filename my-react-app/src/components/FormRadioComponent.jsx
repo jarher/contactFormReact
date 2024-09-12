@@ -24,8 +24,8 @@ export const FormRadioComponent = () => {
       <FormLabel
         as="legend"
         color="brand.greyDark"
-        fontSize={["auto", "0.725rem"]}
-        fontWeight="400"
+        fontSize={["auto", "0.8rem"]}
+        fontWeight="700"
       >
         Query Type
         <AsteriskComponent />
@@ -61,6 +61,7 @@ const RadioGroupWrapper = ({ formik }) => {
       newStyles: changeStyles(state.generalEnquityState),
       state: state.generalEnquityState,
       elementRef: radioGeneralEnquityRef,
+      mt: 0,
     },
     {
       value: "supportRequest",
@@ -71,12 +72,13 @@ const RadioGroupWrapper = ({ formik }) => {
       newStyles: changeStyles(state.supportRequest),
       state: state.supportRequest,
       elementRef: radioSupportRequestRef,
+      mt: ["0.5rem", "0"],
     },
   ];
 
   return (
     <RadioGroup name="queryType">
-      <Stack direction="row" justifyContent="space-between" flex-wrap="wrap">
+      <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
         {radioOptions.map((element) => {
           const props = {
             ...element,
@@ -97,6 +99,7 @@ const RadioBox = ({
   newStyles,
   state,
   elementRef,
+  mt,
 }) => {
   return (
     <>
@@ -105,13 +108,15 @@ const RadioBox = ({
         style={{
           ...newStyles,
           borderStyle: "solid",
-          padding: "0.625rem",
+          padding: "0.625rem 1rem",
           borderRadius: "0.3rem",
         }}
+        marginTop={mt}
         onClick={radioHandler}
         _hover={{
-          borderColor: "brand.greenMedium!important",
-          borderWidth: "2px!important",
+          outlineStyle: "solid",
+          outlineColor: "brand.greenMedium",
+          outlineWidth: "1px",
           cursor: "pointer",
         }}
         ref={elementRef}
