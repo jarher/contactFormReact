@@ -1,17 +1,18 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import { Button, HStack } from "@chakra-ui/react";
+import { createContext, useRef, useReducer, useState, useContext } from "react";
+import { Button } from "@chakra-ui/react";
 import { FormInputTextComponent } from "./FormInputTextComponent";
 import { FormEmailComponent } from "./FormEmailComponent";
 import { FormTextAreaComponent } from "./FormTextAreaComponent";
 import { FormCheckboxComponent } from "./FormCheckboxComponent";
 import { FormRadioComponent } from "./FormRadioComponent";
-import { createContext, useRef, useReducer, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { AlertComponent } from "./AlertComponent";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
+import { UseAppContext } from "../App";
 
 export const FormContext = createContext(null);
 
@@ -58,12 +59,13 @@ function reducer(_, action) {
 export const Form = () => {
   const radioGeneralEnquityRef = useRef(null);
   const radioSupportRequestRef = useRef(null);
-  const [loadingState, setLoadingState] = useState(false);
   const consentCheckboxRef = useRef(null);
+  const [loadingState, setLoadingState] = useState(false);
   const [state, dispatch] = useReducer(reducer, {
     generalEnquityState: false,
     supportRequest: false,
   });
+  const { HStack } = UseAppContext();
 
   const inputStyles = {
     borderColor: "brand.greyMedium",
@@ -159,3 +161,5 @@ export const Form = () => {
     </>
   );
 };
+
+export const UseFormContext = () => useContext(FormContext);

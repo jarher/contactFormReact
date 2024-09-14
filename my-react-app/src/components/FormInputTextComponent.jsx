@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { HStack } from "@chakra-ui/react";
 import { FormWrapper } from "./FormWrapper";
-import { FormContext } from "./Form";
-import { useContext } from "react";
+import { UseFormContext } from "./Form";
+import { UseAppContext } from "../App";
 
 export const FormInputTextComponent = () => {
-  const { formik, inputStyles } = useContext(FormContext);
+  const { HStack } = UseAppContext();
+  const { formik, inputStyles } = UseFormContext();
   const inputTextElements = [
     {
       id: "i1",

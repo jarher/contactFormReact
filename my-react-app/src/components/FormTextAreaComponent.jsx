@@ -1,26 +1,27 @@
 /* eslint-disable react/prop-types */
-import {
-  Text,
-  Textarea,
-  FormControl,
-  FormErrorMessage,
-} from "@chakra-ui/react";
-import { useContext } from "react";
-import { FormContext } from "./Form";
-import { AsteriskComponent } from "./AsteriskComponent";
+import { Textarea } from "@chakra-ui/react";
+import { UseFormContext } from "./Form";
+import { UseAppContext } from "../App";
 
 export const FormTextAreaComponent = () => {
-  const { formik, inputStyles } = useContext(FormContext);
+  const { AsteriskComponent, FormControl, FormLabel, FormErrorMessage } =
+    UseAppContext();
+  const { formik, inputStyles } = UseFormContext();
 
   return (
     <FormControl
       isInvalid={formik.errors.message && formik.touched.message}
       mt={["1rem", "1rem", "0"]}
     >
-      <Text mb="8px" fontSize={["auto", "0.8rem"]} fontWeight="700">
+      <FormLabel
+        mb="8px"
+        fontSize={["auto", "0.8rem"]}
+        fontWeight="700"
+        htmlFor="message"
+      >
         Message
         <AsteriskComponent />
-      </Text>
+      </FormLabel>
       <Textarea
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}

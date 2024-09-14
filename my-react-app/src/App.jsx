@@ -1,8 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import { ChakraProvider, extendTheme, VStack } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  extendTheme,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  VStack,
+} from "@chakra-ui/react";
 import "@fontsource/karla";
 import { Form } from "./components/Form.jsx";
+import { createContext, useContext } from "react";
+import { AsteriskComponent } from "./components/AsteriskComponent.jsx";
+
+const AppContext = createContext(undefined);
 
 const colors = {
   brand: {
@@ -55,18 +67,29 @@ function App() {
   return (
     <>
       <ChakraProvider theme={theme}>
-        <VStack
-          position="relative"
-          justifyContent="center"
-          alignItems="center"
-          minHeight={["auto", "auto", "100vh"]}
-          gap="0"
+        <AppContext.Provider
+          value={{
+            FormControl,
+            FormLabel,
+            AsteriskComponent,
+            FormErrorMessage,
+            HStack,
+          }}
         >
-          <Form />
-        </VStack>
+          <VStack
+            position="relative"
+            justifyContent="center"
+            alignItems="center"
+            minHeight={["auto", "auto", "100vh"]}
+            gap="0"
+          >
+            <Form />
+          </VStack>
+        </AppContext.Provider>
       </ChakraProvider>
     </>
   );
 }
+export const UseAppContext = () => useContext(AppContext);
 
 export default App;

@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-
-import { useContext } from "react";
 import { FormWrapper } from "./FormWrapper";
-import { FormContext } from "./Form";
+import { UseFormContext } from "./Form";
 
 export const FormEmailComponent = () => {
-  const { inputStyles, formik } = useContext(FormContext);
+  const { inputStyles, formik } = UseFormContext();
   const emailProps = {
     formControlProps: {
       isInvalid: formik.errors.email && formik.touched.email,

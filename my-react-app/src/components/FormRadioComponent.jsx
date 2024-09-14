@@ -1,20 +1,14 @@
 /* eslint-disable react/prop-types */
-import {
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormErrorMessage,
-  Radio,
-  Box,
-  Stack,
-} from "@chakra-ui/react";
+import { RadioGroup, Radio, Box, Stack } from "@chakra-ui/react";
 import radioSelectedIcon from "../assets/icon-radio-selected.svg";
 import { useContext } from "react";
-import { FormContext } from "./Form";
+import { FormContext, UseFormContext } from "./Form";
 import { AsteriskComponent } from "./AsteriskComponent";
+import { UseAppContext } from "../App";
 
 export const FormRadioComponent = () => {
-  const { formik } = useContext(FormContext);
+  const { FormControl, FormLabel, FormErrorMessage } = UseAppContext();
+  const { formik } = UseFormContext();
   return (
     <FormControl
       as="fieldset"

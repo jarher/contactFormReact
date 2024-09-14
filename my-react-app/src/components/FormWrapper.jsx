@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import { FormContext } from "./Form";
 import { useContext } from "react";
-import { AsteriskComponent } from "./AsteriskComponent";
+// import { AsteriskComponent } from "./AsteriskComponent";
+import { UseAppContext } from "../App";
 
 export const FormWrapper = ({
   formControlProps,
@@ -15,6 +11,8 @@ export const FormWrapper = ({
   formInputProps,
   formErrorProps,
 }) => {
+  const { FormControl, FormLabel, AsteriskComponent, FormErrorMessage } =
+    UseAppContext();
   const { formik } = useContext(FormContext);
   const { formLabelText, ...labelRest } = formLabelProps;
   const { errorMessage, ...errorRest } = formErrorProps;

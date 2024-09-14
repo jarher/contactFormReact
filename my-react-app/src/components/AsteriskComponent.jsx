@@ -4,6 +4,7 @@ export const AsteriskComponent = () => (
       color: "hsl(169, 82%, 27%)",
       paddingLeft: "0.3rem",
       fontSize: "1rem",
+      fontWeight: 400,
     }}
   >
     *

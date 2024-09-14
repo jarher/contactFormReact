@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { FormControl, HStack, Text } from "@chakra-ui/react";
-import { useContext } from "react";
-import { FormContext } from "./Form";
-import { AsteriskComponent } from "./AsteriskComponent";
+import { Text } from "@chakra-ui/react";
+import { UseFormContext } from "./Form";
+import { UseAppContext } from "../App";
 
 export const FormCheckboxComponent = () => {
-  const { formik, consentCheckboxRef } = useContext(FormContext);
+  const { AsteriskComponent, HStack, FormControl } = UseAppContext();
+  const { formik, consentCheckboxRef } = UseFormContext();
   return (
     <FormControl isInvalid={formik.errors.consent && formik.touched.consent}>
       <HStack alignItems="center" gap="0" mt="1rem">
